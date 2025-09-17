@@ -10,7 +10,9 @@ streamlit (interactive dashboard),
 pytest (testing pipeline functions), 
 GitHub (repo, version control, portfolio)
 
-Analyzed Data Analyst job trends in Philadelphia by scraping postings from LinkedIn, cleaning and structuring the data, and visualizing top skills and hiring companies. Built a simple interactive dashboard with filters and sample job previews to help users explore local market demand.
+This project is a Python-based ETL pipeline that collects cryptocurrency market data from the CoinGecko API.
+It saves raw JSON/CSV snapshots with timestamps, cleans and transforms the data, and provides feature engineering for analysis.  
+The pipeline demonstrates automation, data quality handling, and storage in multiple formats.
 
 # Cryptocurrency Project
 
@@ -19,9 +21,8 @@ Analyzed Data Analyst job trends in Philadelphia by scraping postings from Linke
 
 ## Project Overview
 
-
 **Week 1!** - Setup & Extraction
--
+- Dataset chosen: **
 -
 -
 -
