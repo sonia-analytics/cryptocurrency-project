@@ -36,23 +36,36 @@ The pipeline demonstrates automation, data quality handling, and storage in mult
 
 **Week3!** - Data Storage & Automation
 - Stored cleaned data in:
-  - **Master CSV** ('crypto_master.db'
--
--
--
+- **Master CSV** ('crypto_master.db', table: 'crypto')
+- Wrote and tested sample SQL queries using `pandas.read_sql()` in Jupyter  
+  > Note: DB Browser could not open the `.db` file, so queries were run directly in Python instead.
+- Automated pipeline with the `schedule` library (runs daily at midnight)
+- Added logging:
+  - Run timestamp
+  - Number of new rows added
+  - Errors (if any)  
 
-Note:
+Example log entry:
+2025-09-17 14:21:08,752 INFO SUCCESS: 0 new rows from crypto_clean.csv
+
+## Database Storage
+SQlite ('squlite3') was used to store sucessfully to store the cleaned cryptocurrency dataset.
+The pipeline connects to a local SQLite database (`crypto_master.db`)
+- The cleaned data is written into a table called `crypto`
+- Each run updates the master dataset with new rows
+- The database can be queried directly with `sqlite3` or via pandas in Jupyter
+
+> Note: PostgreSQL was optional in the rubric. For this project, SQLite was sufficient and fully implemented.
 
 ## Files
-- raw.csv - raw file with timestamp
-- clean.csv = clean file with timestamp
-- week_1.pynb
-- week2.pynb
-- raw.png - raw file with
-- raw.json -
+- crypto_raw.csv - raw file with timestamp
+- crypto_clean.csv = clean file with timestamp
+- week_1.pynb - analysis noteboook for week 1
+- week2.pynb - analyssis note
+- crypto_raw.json - raw json file with timestamp
 
 ## Packages Intsalled
-pip install pandas requests squlite
+pip install pandas requests squlite schedule logging
 
 ## Run dashboard locally
 - streamlit run dashboard.py
