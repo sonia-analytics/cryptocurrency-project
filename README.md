@@ -1,49 +1,40 @@
-Tools:
-Python + Jupyter Notebook, 
-requests / API SDKs (data fetching), 
-pandas (transformation & analysis), 
-sqlite3,
-schedule or APScheduler (automation)
-logging (monitoring)
-matplotlib / plotly (visualization)
-streamlit (interactive dashboard),
-pytest (testing pipeline functions), 
-GitHub (repo, version control, portfolio)
-
 # Cryptocurrency Project
 
 **Author:** Sonia Mannepuli
-**Date:** 9/14/2025
+**Date:** September 2025
 
 ## Project Overview
-This project is a Python-based ETL pipeline that collects cryptocurrency market data from the CoinGecko API.
-It saves raw JSON/CSV snapshots with timestamps, cleans and transforms the data, and provides feature engineering for analysis.  
-The pipeline demonstrates automation, data quality handling, and storage in multiple formats.
+This project  builds a Python-based ETL pipeline that collects cryptocurrency market data from the **CoinGecko API**, saves raw snapshots (CSV/JSON), cleans and transforms the data, and stores it in **SQLite** for analysis. The project demonstrates automation, logging, and reproducible data workflows.
 
 **Week 1!** - Setup & Extraction
-- Dataset chosen: **Coin Gecko**
-- Fetches ~900 crptocurriences 
-- Save the JSON and the RAW with timestamp
-- Saves cleaned CSV with selected columns
-- Implemented retry logic for failed requests
-- (Optional) Cleaned data was also stored locally on SQLite ('crypto_master.db') but is **not inmcluded in the repo** to keep it lightweight.
+ Dataset chosen: **Cryptocurrency (CoinGecko API)**s** with timestamps
+- Python script fetches ~900 top coins
+- Saves raw **CSV + JSON snapshot
+- Implements retry logic for failed API requests
 
 **Week2!** - Data Cleaning & Extraction
-- Normalized column names (uppercase, lowercase)
-- Handled missing values and duplictaes
-- Added feature enginnering column: 'price_change_pct'
-- Saved transformed dataset as CSV (with timestamp)
-
+- Normalized column names (lowercase, underscores)
+- Removed duplicates and handled missing values
+- Added feature: `price_change_pct`
+- Saved cleaned dataset (`crypto_clean_*.csv`)
+- Unit tests (`pytest`) verify:
+  - No duplicate IDs
+  - No missing prices
+ 
 **Week3!** - Data Storage & Automation
-- Stored cleaned data in:
-- **Master CSV** ('crypto_master.db', table: 'crypto')
-- Wrote and tested sample SQL queries using `pandas.read_sql()` in Jupyter  
-  > Note: DB Browser could not open the `.db` file, so queries were run directly in Python instead.
-- Automated pipeline with the `schedule` library (runs daily at midnight)
-- Added logging:
-  - Run timestamp
-  - Number of new rows added
-  - Errors (if any)  
+-- Stored cleaned data in:
+  - Master CSV (`crypto_master.csv`)
+  - SQLite database (`crypto_master.db`, table: `crypto`)
+- Verified using sample SQL queries in Jupyter:
+  ```sql
+  SELECT COUNT(*) FROM crypto;
+  SELECT id, name, current_price, market_cap FROM crypto ORDER BY market_cap DESC LIMIT 5;
+  ```
+- Automated with `schedule` (daily at midnight + immediate run)
+- Logging records:
+  - Timestamp
+  - Rows added
+  - Errors (if any)
 
 Example log entry:
 2025-09-17 14:21:08,752 INFO SUCCESS: 0 new rows from crypto_clean.csv
@@ -57,16 +48,23 @@ The pipeline connects to a local SQLite database (`crypto_master.db`)
 
 > Note: PostgreSQL was optional in the rubric. For this project, SQLite was sufficient and fully implemented.
 
-## Files
-- crypto_raw.csv - raw file with timestamp
-- crypto_clean.csv = clean file with timestamp
-- week_1.pynb - analysis noteboook for week 1
-- week2.pynb - analyssis note
-- crypto_raw.json - raw json file with timestamp
-
+## Project Structure
+- `data/raw/` → raw JSON + CSV snapshots
+- `data/clean/` → cleaned CSV, master CSV, SQLite DB
+- `scripts/` → pipeline scripts (`fetch_crypto.py`, `clean_crypto.py`, `automate_pipeline.py`)
+- `notebooks/` → interactive Jupyter notebooks
+- `docs/` → pipeline architecture diagram
+- `logs/` → pipeline run logs
+- 
 ## Packages Intsalled
 pip install pandas requests squlite schedule logging
 
+## Running the Pipeline
+```bash
+python scripts/fetch_crypto.py   # Fetch raw + clean data
+python scripts/clean_crypto.py   # Transform data
+python scripts/automate_pipeline.py  # Daily scheduled run with logging
+```
 ## Run dashboard locally
 - streamlit run dashboard.py
 
