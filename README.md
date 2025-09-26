@@ -6,13 +6,14 @@
 ## Project Overview
 This project  builds a Python-based ETL pipeline that collects cryptocurrency market data from the **CoinGecko API**, saves raw snapshots (CSV/JSON), cleans and transforms the data, and stores it in **SQLite** for analysis. The project demonstrates automation, logging, and reproducible data workflows.
 
-**Week 1!** - Setup & Extraction
- Dataset chosen: **Cryptocurrency (CoinGecko API)**s** with timestamps
+## Week 1 - Setup & Extraction
+- Dataset chosen: **Cryptocurrency (CoinGecko API)
 - Python script fetches ~900 top coins
-- Saves raw **CSV + JSON snapshot
+- Save the rar CSV file
+- Saved raw CSV + JSON snapshots with timestamps
 - Implements retry logic for failed API requests
 
-**Week2!** - Data Cleaning & Extraction
+## Week2 - Data Cleaning & Extraction
 - Normalized column names (lowercase, underscores)
 - Removed duplicates and handled missing values
 - Added feature: `price_change_pct`
@@ -21,7 +22,7 @@ This project  builds a Python-based ETL pipeline that collects cryptocurrency ma
   - No duplicate IDs
   - No missing prices
  
-**Week3!** - Data Storage & Automation
+## Week 3 - Data Storage & Automation
 -- Stored cleaned data in:
   - Master CSV (`crypto_master.csv`)
   - SQLite database (`crypto_master.db`, table: `crypto`)
@@ -40,7 +41,7 @@ Example log entry:
 2025-09-17 14:21:08,752 INFO SUCCESS: 0 new rows from crypto_clean.csv
 
 ## Database Storage
-SQlite ('squlite3') was used to store sucessfully to store the cleaned cryptocurrency dataset.
+SQlite ('sqlite3') was used to store successfully to store the cleaned cryptocurrency dataset.
 The pipeline connects to a local SQLite database (`crypto_master.db`)
 - The cleaned data is written into a table called `crypto`
 - Each run updates the master dataset with new rows
@@ -49,14 +50,14 @@ The pipeline connects to a local SQLite database (`crypto_master.db`)
 > Note: PostgreSQL was optional in the rubric. For this project, SQLite was sufficient and fully implemented.
 
 ## Project Structure
-- `data/raw/` → raw JSON + CSV snapshots
+- `data/raw/` → raw JSON + CSV snapshots + raw CSV file
 - `data/clean/` → cleaned CSV, master CSV, SQLite DB
 - `scripts/` → pipeline scripts (`fetch_crypto.py`, `clean_crypto.py`, `automate_pipeline.py`)
 - `notebooks/` → interactive Jupyter notebooks
 - `docs/` → pipeline architecture diagram
 - `logs/` → pipeline run logs
 - 
-## Packages Intsalled
+## Packages Installed
 pip install pandas requests squlite schedule logging
 
 ## Running the Pipeline
