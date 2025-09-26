@@ -56,9 +56,9 @@ SQLite (`sqlite3`) was used successfully:
 pip install pandas requests squlite schedule logging
 
 ## Running the Pipeline
-python scripts/fetch_crypto.py   # Fetch raw + clean data
-python scripts/clean_crypto.py   # Transform data
-python scripts/automate_pipeline.py  # Daily scheduled run with logging
+- python scripts/fetch_crypto.py   # Fetch raw + clean data
+- python scripts/clean_crypto.py   # Transform data
+- python scripts/automate_pipeline.py  # Daily scheduled run with logging
 
 ## Run dashboard locally
 - streamlit run dashboard.py
