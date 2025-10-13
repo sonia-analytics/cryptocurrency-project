@@ -45,12 +45,16 @@ SQLite (`sqlite3`) was used successfully:
 - Cleaned data stored in table `crypto`  
 - Each run updates the master dataset  
 - Database can be queried in Python (`pandas.read_sql`) or external tools (e.g., DB Browser for SQLite)  
-> PostgreSQL was optional in the rubric. SQLite was sufficient and fully implemented.  
+> PostgreSQL was optional in the rubric. SQLite was sufficient and fully implemented.
+
+## Week 4 – Data Quality & Monitoring
+- A data quality checker was implemented to detect missing values, duplicates, and invalid ranges.
+- Daily CSV and Markdown reports are generated automatically to ensure data accuracy and consistency.
 
 ## Project Structure
 - `data/raw/` → raw JSON + CSV snapshots  
 - `data/clean/` → cleaned CSV, master CSV, SQLite DB  
-- `scripts/` → Python scripts (`fetch_crypto.py`, `clean_crypto.py`, `automate_pipel
+- `scripts/` → Python scripts (`fetch_crypto.py`, `clean_crypto.py`, `automate_pipeline', 'data_quality_scripts')
 
 ## Packages Installed
 pip install pandas requests squlite schedule logging
