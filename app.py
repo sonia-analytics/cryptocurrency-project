@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
-import matplotlib.pyplot as plt
 import os
 
 st.set_page_config(page_title="Crypto Dashboard", layout="wide")
