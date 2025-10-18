@@ -10,7 +10,6 @@ st.caption("Created by Sonia Mannepuli — Week 5 Visualization Project")
 
 FILE = "crypto_clean.csv"
 
-# --- Load data safely ---
 try:
     df = pd.read_csv(FILE)
     # Fix single-column issue where commas are inside one column
