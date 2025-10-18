@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import os
-import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Crypto Dashboard", layout="wide")
 st.title("Cryptocurrency Dashboard")
