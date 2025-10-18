@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import os
+import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Crypto Dashboard", layout="wide")
 st.title("Cryptocurrency Dashboard")
@@ -36,8 +37,6 @@ st.dataframe(data.head(10))
 # --- Summary stats ---
 st.subheader("📈 Summary Stats")
 st.write(data[["current_price", "market_cap", "total_volume"]].describe())
-
-import matplotlib.pyplot as plt
 
 # --- Altair Chart (Price Trend) ---
 if "fetched_at" in data.columns:
