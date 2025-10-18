@@ -37,6 +37,8 @@ st.dataframe(data.head(10))
 st.subheader("📈 Summary Stats")
 st.write(data[["current_price", "market_cap", "total_volume"]].describe())
 
+import matplotlib.pyplot as plt
+
 # --- Altair Chart (Price Trend) ---
 if "fetched_at" in data.columns:
     data["fetched_at"] = pd.to_datetime(data["fetched_at"], errors="coerce")
