@@ -5,58 +5,59 @@ import os
 
 st.set_page_config(page_title="Crypto Dashboard", layout="wide")
 st.title("Cryptocurrency Dashboard")
-st.caption("Created by Sonia Mannepuli — Week 5 Visualization Project")
+st.write("Created by Sonia Mannepuli — Week 5 Visualization Project")
 
-# -------- Load dataset --------
-possible_files = ["data/clean/crypto_clean.csv", "crypto_clean.csv"]
-file_path = next((f for f in possible_files if os.path.exists(f)), None)
+FILE_PATH = "crypto_clean.csv"
 
-if not file_path:
-    st.error("❌ Could not find crypto_clean.csv. Upload it to your GitHub repo (root or data/clean/).")
+if not os.path.exists(FILE_PATH):
+    st.error("CSV file not found. Upload or check the path.")
     st.stop()
 
-df = pd.read_csv(file_path)
-df.columns = [c.lower().strip() for c in df.columns]
-st.success(f"Loaded {len(df)} rows")
-
-# -------- Identify crypto column --------
-crypto_col = next((c for c in ["name", "id", "symbol"] if c in df.columns), None)
-if not crypto_col:
-    st.error("No column found for crypto identifier ('name', 'id', or 'symbol'). Check your CSV headers.")
-    st.write("Available columns:", list(df.columns))
+# --- Load CSV properly ---
+try:
+    df = pd.read_csv(FILE_PATH)
+    if len(df.columns) == 1:
+        df = pd.read_csv(FILE_PATH, sep=",")  # ensure proper delimiter
+except Exception as e:
+    st.error(f"Error reading CSV: {e}")
     st.stop()
 
-# -------- Sidebar filter --------
+# --- Confirm columns ---
+if not any(col in df.columns for col in ["name", "id", "symbol"]):
+    st.error(f"No column found for crypto identifier ('name', 'id', 'symbol'). Available columns: {list(df.columns)}")
+    st.stop()
+
+# --- Dropdown Filter ---
+crypto_col = "name" if "name" in df.columns else ("id" if "id" in df.columns else "symbol")
 cryptos = sorted(df[crypto_col].dropna().unique())
-selected = st.selectbox("Select cryptocurrency:", cryptos)
-filtered = df[df[crypto_col] == selected]
+selected_crypto = st.selectbox("Choose a cryptocurrency:", cryptos)
 
-if filtered.empty:
-    st.warning("No data found for the selected cryptocurrency.")
-    st.stop()
+# --- Filtered Data ---
+data = df[df[crypto_col] == selected_crypto]
 
-# -------- Summary stats --------
+# --- Summary Statistics ---
 st.subheader("📊 Summary Statistics")
-col1, col2, col3 = st.columns(3)
-col1.metric("Current Price (USD)", f"${filtered['current_price'].iloc[0]:,.2f}")
-col2.metric("Market Cap", f"${filtered['market_cap'].iloc[0]:,.0f}")
-col3.metric("24h Change (%)", f"{filtered['price_change_pct'].iloc[0]:.2f}")
+st.write(data[["current_price", "market_cap", "total_volume"]].describe())
 
-# -------- Visualization --------
-if "fetched_at" in filtered.columns:
-    chart = (
-        alt.Chart(filtered)
+# --- Charts ---
+st.subheader("📈 Price Trend (with Moving Average)")
+if "fetched_at" in data.columns:
+    data["fetched_at"] = pd.to_datetime(data["fetched_at"], errors="coerce")
+    data = data.sort_values("fetched_at")
+    data["MA_5"] = data["current_price"].rolling(5).mean()
+
+    price_chart = (
+        alt.Chart(data)
         .mark_line(point=True)
-        .encode(
-            x=alt.X("fetched_at:N", title="Fetch Timestamp"),
-            y=alt.Y("current_price:Q", title="Price (USD)"),
-            tooltip=[crypto_col, "current_price", "market_cap", "price_change_pct"]
-        )
-        .properties(title=f"{selected} Price Trend")
-        .interactive()
+        .encode(x="fetched_at:T", y="current_price:Q", color=alt.value("skyblue"))
+        .properties(title=f"{selected_crypto} - Price Trend")
     )
-    st.altair_chart(chart, use_container_width=True)
+    ma_chart = alt.Chart(data).mark_line(color="orange").encode(x="fetched_at:T", y="MA_5:Q")
+    st.altair_chart(price_chart + ma_chart, use_container_width=True)
+else:
+    st.info("No 'fetched_at' column found for time-series chart.")
 
+  
 # -------- Notes --------
 st.markdown("---")
 st.markdown(
