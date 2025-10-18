@@ -37,22 +37,45 @@ st.dataframe(data.head(10))
 st.subheader("📈 Summary Stats")
 st.write(data[["current_price", "market_cap", "total_volume"]].describe())
 
-# --- Chart ---
-st.title("Charts Below")
-top5 = df.nlargest(5, "market_cap")
-plt.figure(figsize=(10,5))
-plt.plot(top5["name"], top5["current_price"], marker="o")
-plt.title("Top 5 Cryptos – Current Price")
-plt.ylabel("Price (USD)")
-plt.xticks(rotation=30)
-plt.show()
+# --- Altair Chart (Price Trend) ---
+if "fetched_at" in data.columns:
+    data["fetched_at"] = pd.to_datetime(data["fetched_at"], errors="coerce")
+    chart = (
+        alt.Chart(data)
+        .mark_line(point=True)
+        .encode(x="fetched_at:T", y="current_price:Q", color=alt.value("skyblue"))
+        .properties(title=f"{crypto} Price Trend")
+    )
+    st.altair_chart(chart, use_container_width=True)
+else:
+    st.warning("No 'fetched_at' column found for trend chart.")
 
-# Moving average example
-df["price_ma"] = df["current_price"].rolling(5, min_periods=1).mean()
-plt.figure(figsize=(10,5))
-plt.plot(df["current_price"], label="Price")
-plt.plot(df["price_ma"], label="5-Day MA")
-plt.legend(); plt.title("Price vs Moving Average"); plt.show()
+# --- Matplotlib Charts ---
+st.subheader("📊 Additional Charts")
+
+# Top 5 cryptos by market cap
+try:
+    top5 = df.nlargest(5, "market_cap")
+    fig1, ax1 = plt.subplots(figsize=(8,4))
+    ax1.plot(top5["name"], top5["current_price"], marker="o", color="purple")
+    ax1.set_title("Top 5 Cryptos – Current Price")
+    ax1.set_ylabel("Price (USD)")
+    ax1.set_xticklabels(top5["name"], rotation=30)
+    st.pyplot(fig1)
+except Exception as e:
+    st.warning(f"Could not plot Top 5 chart: {e}")
+
+# Moving Average (based on current_price)
+try:
+    df["price_ma"] = df["current_price"].rolling(5, min_periods=1).mean()
+    fig2, ax2 = plt.subplots(figsize=(8,4))
+    ax2.plot(df["current_price"], label="Price", color="blue")
+    ax2.plot(df["price_ma"], label="5-Day MA", color="orange")
+    ax2.legend()
+    ax2.set_title("Price vs 5-Day Moving Average")
+    st.pyplot(fig2)
+except Exception as e:
+    st.warning(f"Could not plot Moving Average chart: {e}")
 
 
 st.markdown("---")
