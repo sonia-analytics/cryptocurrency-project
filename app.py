@@ -77,6 +77,11 @@ try:
 except Exception as e:
     st.warning(f"Could not plot Moving Average chart: {e}")
 
-
+st.subheader("Highlight Insights with Visual Storytelling")
+st.markdown("""
+**Bitcoin and Ethereum** dominate the global crypto market, contributing more than half of the total market capitalization.
+The **5-day moving average** smooths daily volatility and reveals steady upward momentum, reflecting overall investor confidence.
+Meanwhile, altcoins such as **Solana** and **XRP** show sharper fluctuations, highlighting higher speculative activity and the contrasting behavior between stable large-cap assets and more volatile emerging tokens.
+""")
 st.markdown("---")
 st.write("Data source: CoinGecko API | Visualization by Sonia Mannepuli")
