@@ -4,7 +4,7 @@ import altair as alt
 import os
 
 st.set_page_config(page_title="Crypto Dashboard", layout="wide")
-st.title("💹 Cryptocurrency Dashboard")
+st.title("Cryptocurrency Dashboard")
 st.caption("Created by Sonia Mannepuli — Week 5 Visualization Project")
 
 # -------- Load dataset --------
@@ -17,7 +17,7 @@ if not file_path:
 
 df = pd.read_csv(file_path)
 df.columns = [c.lower().strip() for c in df.columns]
-st.success(f"✅ Loaded {len(df)} rows")
+st.success(f"Loaded {len(df)} rows")
 
 # -------- Identify crypto column --------
 crypto_col = next((c for c in ["name", "id", "symbol"] if c in df.columns), None)
