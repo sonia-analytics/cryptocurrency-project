@@ -4,7 +4,7 @@ import altair as alt
 import os
 
 st.set_page_config(page_title="Crypto Dashboard", layout="wide")
-st.title("💹 Cryptocurrency Dashboard")
+st.title("Cryptocurrency Dashboard")
 st.caption("Created by Sonia Mannepuli — Week 5 Visualization Project")
 
 FILE = "crypto_clean.csv"
@@ -38,17 +38,22 @@ st.subheader("📈 Summary Stats")
 st.write(data[["current_price", "market_cap", "total_volume"]].describe())
 
 # --- Chart ---
-if "fetched_at" in data.columns:
-    data["fetched_at"] = pd.to_datetime(data["fetched_at"], errors="coerce")
-    chart = (
-        alt.Chart(data)
-        .mark_line(point=True)
-        .encode(x="fetched_at:T", y="current_price:Q", color=alt.value("skyblue"))
-        .properties(title=f"{crypto} Price Trend")
-    )
-    st.altair_chart(chart, use_container_width=True)
-else:
-    st.warning("No 'fetched_at' column found for trend chart.")
+st.title("Charts Below")
+top5 = df.nlargest(5, "market_cap")
+plt.figure(figsize=(10,5))
+plt.plot(top5["name"], top5["current_price"], marker="o")
+plt.title("Top 5 Cryptos – Current Price")
+plt.ylabel("Price (USD)")
+plt.xticks(rotation=30)
+plt.show()
+
+# Moving average example
+df["price_ma"] = df["current_price"].rolling(5, min_periods=1).mean()
+plt.figure(figsize=(10,5))
+plt.plot(df["current_price"], label="Price")
+plt.plot(df["price_ma"], label="5-Day MA")
+plt.legend(); plt.title("Price vs Moving Average"); plt.show()
+
 
 st.markdown("---")
 st.write("Data source: CoinGecko API | Visualization by Sonia Mannepuli")
