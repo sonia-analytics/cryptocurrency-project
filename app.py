@@ -63,7 +63,6 @@ except Exception as e:
 
 try:
     df["price_ma"] = df["current_price"].rolling(5, min_periods=1).mean()
-
     fig2, ax2 = plt.subplots(figsize=(6,3))  # compact and clean
     ax2.plot(df["current_price"], label="Price", color="steelblue", linewidth=1.3)
     ax2.plot(df["price_ma"], label="5-Day MA", color="darkorange", linewidth=1.6, linestyle="--")
@@ -72,7 +71,6 @@ try:
     ax2.set_ylabel("Price (USD)", fontsize=9)
     ax2.grid(alpha=0.3)
     ax2.tick_params(axis="both", labelsize=8)
-
     st.pyplot(fig2)
 except Exception as e:
     st.warning(f"Could not plot Moving Average chart: {e}")
