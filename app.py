@@ -7,7 +7,7 @@ import os
 st.title("CryptoCurrenecy Project")
 st.write("Created By Sonia Mannepuli.")
 
-df = pd.read_csv("data/clean/crypto_clean.csv")
+df = pd.read_csv("crypto_clean.csv")
 
 crypto = st.selectbox("Choose a cryptocurrency:", df["name"].unique())
 
