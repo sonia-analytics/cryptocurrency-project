@@ -21,12 +21,11 @@ except Exception as e:
     st.error(f"Error loading {FILE}: {e}")
     st.stop()
 
-# --- Dropdown filter ---
 if "name" in df.columns:
     crypto = st.selectbox("Select cryptocurrency:", sorted(df["name"].dropna().unique()))
     data = df[df["name"] == crypto]
 else:
-    st.error("❌ Missing 'name' column. Please check your CSV.")
+    st.error("Missing 'name' column. Please check your CSV.")
     st.stop()
 
 # --- Data preview ---
