@@ -3,50 +3,74 @@ import pandas as pd
 import altair as alt
 import os
 
-st.title("Cryptocurrency Project")
-st.write("Created by Sonia Mannepuli")
+st.set_page_config(page_title="Crypto Market Dashboard", layout="wide")
+st.title("💹 Cryptocurrency Dashboard")
+st.caption("Built by Sonia Mannepuli — Week 5: Data Visualization & Storytelling")
 
-# Load dataset
-df = pd.read_csv("data/clean/crypto_clean.csv")
-
-# Display available columns (for debugging)
-st.write("Columns in dataset:", list(df.columns))
-
-# Choose a column that exists
-if "name" in df.columns:
-    options = df["name"].unique()
-    label = "name"
-elif "id" in df.columns:
-    options = df["id"].unique()
-    label = "id"
-elif "symbol" in df.columns:
-    options = df["symbol"].unique()
-    label = "symbol"
-else:
-    st.error("No valid crypto name column found (expected 'name', 'id', or 'symbol').")
+# ---------- Load Cleaned Data ----------
+FILE_PATH = "data/clean/crypto_clean.csv"
+if not os.path.exists(FILE_PATH):
+    st.error("❌ Clean CSV not found. Please ensure crypto_clean.csv is in data/clean/")
     st.stop()
 
-# Dropdown
-crypto = st.selectbox("Choose a cryptocurrency:", options)
+df = pd.read_csv(FILE_PATH)
+st.write("✅ Dataset loaded successfully —", len(df), "rows")
 
-# Filter data
-filtered = df[df[label] == crypto]
+# Show available columns for transparency
+st.write("**Available Columns:**", list(df.columns))
 
-# Display metrics
-st.metric("Current Price (USD)", f"{filtered['current_price'].values[0]:,.2f}")
-st.metric("Market Cap (USD)", f"{filtered['market_cap'].values[0]:,.0f}")
+# ---------- Choose column for crypto selection ----------
+name_col = None
+for col in ["name", "id", "symbol"]:
+    if col in df.columns:
+        name_col = col
+        break
 
-# Chart
-chart = alt.Chart(filtered).mark_line(point=True).encode(
-    x=alt.X("fetched_at:N", title="Fetch Date"),
-    y=alt.Y("current_price:Q", title="Price (USD)")
-)
-st.altair_chart(chart, use_container_width=True)
+if not name_col:
+    st.error("No suitable crypto identifier found (expected 'name', 'id', or 'symbol').")
+    st.stop()
 
-st.subheader("Highlights & Insights")
-st.write(
-    "Bitcoin and Ethereum dominate the global crypto market, contributing more than half of the total market capitalization. "
-    "The 5-day moving average smooths daily volatility and reveals steady upward momentum, reflecting overall investor confidence. "
-    "Meanwhile, altcoins such as Solana and XRP show sharper fluctuations, highlighting higher speculative activity and "
-    "the contrasting behavior between stable large-cap assets and more volatile emerging tokens."
-)
+# ---------- Filters ----------
+cryptos = sorted(df[name_col].unique())
+crypto = st.selectbox("Select Cryptocurrency:", cryptos)
+
+filtered = df[df[name_col] == crypto]
+
+if filtered.empty:
+    st.warning("No data found for this cryptocurrency.")
+    st.stop()
+
+# ---------- Summary Stats ----------
+col1, col2, col3 = st.columns(3)
+col1.metric("Current Price (USD)", f"${filtered['current_price'].values[0]:,.2f}")
+col2.metric("Market Cap", f"${filtered['market_cap'].values[0]:,.0f}")
+col3.metric("24h Change (%)", f"{filtered['price_change_pct'].values[0]:.2f}%")
+
+# ---------- Visualization ----------
+if "fetched_at" in filtered.columns:
+    chart = (
+        alt.Chart(filtered)
+        .mark_line(point=True)
+        .encode(
+            x=alt.X("fetched_at:N", title="Fetch Time"),
+            y=alt.Y("current_price:Q", title="Price (USD)"),
+            tooltip=[name_col, "current_price", "market_cap"]
+        )
+        .properties(title=f"Price Trend for {crypto}")
+    )
+    st.altair_chart(chart, use_container_width=True)
+else:
+    st.info("No time column ('fetched_at') available for trend visualization.")
+
+# ---------- Insights ----------
+st.subheader("📊 Highlighted Insights")
+st.write("""
+**Market Leadership:** Bitcoin and Ethereum dominate the overall crypto market, 
+holding over half of total capitalization.
+
+**Price Behavior:** The 5-day moving average shows smoother trends, revealing 
+underlying market direction beyond daily noise.
+
+**Volatility Patterns:** Altcoins such as Solana and XRP show sharper price swings, 
+reflecting higher speculative behavior compared to stable large-cap assets.
+""")
