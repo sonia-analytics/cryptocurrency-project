@@ -61,6 +61,7 @@ try:
 except Exception as e:
     st.warning(f"Could not plot Top 5 chart: {e}")
 
+try:
 fig2, ax2 = plt.subplots(figsize=(6,3))  # compact and clean
 ax2.plot(df["current_price"], label="Price", color="steelblue", linewidth=1.3)
 ax2.plot(df["price_ma"], label="5-Day MA", color="darkorange", linewidth=1.6, linestyle="--")
