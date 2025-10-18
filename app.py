@@ -56,9 +56,12 @@ st.subheader("📊 Additional Charts")
 
 # Top 5 cryptos by market cap
 try:
-    top5 = df.nlargest(5, "market_cap")
+    # Convert market_cap to numeric
+    df["market_cap"] = pd.to_numeric(df["market_cap"], errors="coerce")
+
+    top5 = df.nlargest(5, "market_cap").dropna(subset=["market_cap"])
     fig1, ax1 = plt.subplots(figsize=(8,4))
-    ax1.plot(top5["name"], top5["current_price"], marker="o", color="purple")
+    ax1.bar(top5["name"], top5["current_price"], color="purple")
     ax1.set_title("Top 5 Cryptos – Current Price")
     ax1.set_ylabel("Price (USD)")
     ax1.set_xticklabels(top5["name"], rotation=30)
