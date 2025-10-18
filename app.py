@@ -28,15 +28,12 @@ else:
     st.error("Missing 'name' column. Please check your CSV.")
     st.stop()
 
-# --- Data preview ---
-st.subheader("📊 Data Preview")
+st.subheader("Data Preview")
 st.dataframe(data.head(10))
 
-# --- Summary stats ---
-st.subheader("📈 Summary Stats")
+st.subheader("Summary Stats")
 st.write(data[["current_price", "market_cap", "total_volume"]].describe())
 
-# --- Altair Chart (Price Trend) ---
 if "fetched_at" in data.columns:
     data["fetched_at"] = pd.to_datetime(data["fetched_at"], errors="coerce")
     chart = (
@@ -49,10 +46,8 @@ if "fetched_at" in data.columns:
 else:
     st.warning("No 'fetched_at' column found for trend chart.")
 
-# --- Matplotlib Charts ---
-st.subheader("📊 Additional Charts")
+st.subheader("Additional Charts")
 
-# Top 5 cryptos by market cap
 try:
     # Convert market_cap to numeric
     df["market_cap"] = pd.to_numeric(df["market_cap"], errors="coerce")
@@ -67,7 +62,6 @@ try:
 except Exception as e:
     st.warning(f"Could not plot Top 5 chart: {e}")
 
-# Moving Average (based on current_price)
 try:
     df["price_ma"] = df["current_price"].rolling(5, min_periods=1).mean()
     fig2, ax2 = plt.subplots(figsize=(8,4))
@@ -78,7 +72,6 @@ try:
     st.pyplot(fig2)
 except Exception as e:
     st.warning(f"Could not plot Moving Average chart: {e}")
-
 
 st.markdown("---")
 st.write("Data source: CoinGecko API | Visualization by Sonia Mannepuli")
