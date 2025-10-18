@@ -62,19 +62,16 @@ try:
 except Exception as e:
     st.warning(f"Could not plot Top 5 chart: {e}")
 
-try:
-    # Convert market_cap to numeric
-    df["market_cap"] = pd.to_numeric(df["market_cap"], errors="coerce")
-
-    top5 = df.nlargest(5, "market_cap").dropna(subset=["market_cap"])
-    fig1, ax1 = plt.subplots(figsize=(8,4))
-    ax1.bar(top5["name"], top5["current_price"], color="purple")
-    ax1.set_title("Top 5 Cryptos – Current Price")
-    ax1.set_ylabel("Price (USD)")
-    ax1.set_xticklabels(top5["name"], rotation=30)
-    st.pyplot(fig1)
+ry:
+    df["price_ma"] = df["current_price"].rolling(5, min_periods=1).mean()
+    fig2, ax2 = plt.subplots(figsize=(8,4))
+    ax2.plot(df["current_price"], label="Price", color="blue")
+    ax2.plot(df["price_ma"], label="5-Day MA", color="orange")
+    ax2.legend()
+    ax2.set_title("Price vs 5-Day Moving Average")
+    st.pyplot(fig2)
 except Exception as e:
-    st.warning(f"Could not plot Top 5 chart: {e}")
+    st.warning(f"Could not plot Moving Average chart: {e}")
 
 st.markdown("---")
 st.write("Data source: CoinGecko API | Visualization by Sonia Mannepuli")
