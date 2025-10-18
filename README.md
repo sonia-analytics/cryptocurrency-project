@@ -51,13 +51,24 @@ SQLite (`sqlite3`) was used successfully:
 - A data quality checker was implemented to detect missing values, duplicates, and invalid ranges.
 - Daily CSV and Markdown reports are generated automatically to ensure data accuracy and consistency.
 
+## Week 5 - Analysis & Visualization
+- Performed EDA in Jupyter Notebbok
+- Add time-series visualizialtion (trends line, moving average)
+- Highlighted insights with visual storytelling through cahrts and summary statistics
+- Bulit a Streamlit dashboard with interactive charts, filters, and summary stats
+
+## Week 6 - Documenattion and Deploymenmt
+Polished README with setup, usage instructions, and screenshots
+Deployed the Streamlit dashboard to Streamlit Cloud
+Verified live link: Explore the live dashboard
+
 ## Project Structure
 - `data/raw/` → raw JSON + CSV snapshots  
 - `data/clean/` → cleaned CSV, master CSV, SQLite DB  
 - `scripts/` → Python scripts (`fetch_crypto.py`, `clean_crypto.py`, `automate_pipeline', 'data_quality_scripts')
 
 ## Packages Installed
-pip install pandas requests squlite schedule logging
+pip install pandas requests squlite schedule logging streamlit
 
 ## Running the Pipeline
 - python scripts/fetch_crypto.py   # Fetch raw + clean data
