@@ -63,23 +63,15 @@ except Exception as e:
     st.warning(f"Could not plot Top 5 chart: {e}")
 
 try:
+    # Convert market_cap to numeric
     df["market_cap"] = pd.to_numeric(df["market_cap"], errors="coerce")
+
     top5 = df.nlargest(5, "market_cap").dropna(subset=["market_cap"])
-
-    fig1, ax1 = plt.subplots(figsize=(6,3))  # smaller, balanced size
-    bars = ax1.bar(top5["name"], top5["current_price"], color="mediumslateblue", edgecolor="black")
-
-    ax1.set_title("Top 5 Cryptos – Current Price", fontsize=11, pad=10)
-    ax1.set_ylabel("Price (USD)", fontsize=9)
-    ax1.set_xticklabels(top5["name"], rotation=25, fontsize=8)
-    ax1.tick_params(axis="y", labelsize=8)
-    ax1.grid(axis="y", linestyle="--", alpha=0.4)
-
-    # Add price labels above bars
-    for bar in bars:
-        ax1.text(bar.get_x() + bar.get_width()/2, bar.get_height(),
-                 f"${bar.get_height():,.0f}", ha='center', va='bottom', fontsize=7)
-
+    fig1, ax1 = plt.subplots(figsize=(8,4))
+    ax1.bar(top5["name"], top5["current_price"], color="purple")
+    ax1.set_title("Top 5 Cryptos – Current Price")
+    ax1.set_ylabel("Price (USD)")
+    ax1.set_xticklabels(top5["name"], rotation=30)
     st.pyplot(fig1)
 except Exception as e:
     st.warning(f"Could not plot Top 5 chart: {e}")
