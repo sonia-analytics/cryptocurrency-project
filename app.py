@@ -62,7 +62,7 @@ try:
 except Exception as e:
     st.warning(f"Could not plot Top 5 chart: {e}")
 
-ry:
+try:
     df["price_ma"] = df["current_price"].rolling(5, min_periods=1).mean()
     fig2, ax2 = plt.subplots(figsize=(8,4))
     ax2.plot(df["current_price"], label="Price", color="blue")
