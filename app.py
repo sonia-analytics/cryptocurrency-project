@@ -4,6 +4,7 @@ import altair as alt
 import matplotlib.pyplot as plt
 import os
 
+st.set_page_config(page_title="Crypto Dashboard", layout="wide")
 st.title("Cryptocurrency Dashboard")
 st.caption("Created by Sonia Mannepuli — Week 5 Visualization Project")
 
