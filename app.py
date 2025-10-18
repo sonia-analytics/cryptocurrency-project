@@ -11,7 +11,7 @@ df = pd.read_csv("crypto_clean.csv")
 
 crypto = st.selectbox("Choose a cryptocurrency:", df["name"].unique())
 
-filtered = df[df["name"] == crypto]]
+filtered = df[df["name"] == crypto]
 
 st.metric("Current Price (USD)", f"{filtered['current_price'].values[0]:,.2f}")
 st.metric("Market Cap (USD)", f"{filtered['market_cap'].values[0]:,.0f}")
