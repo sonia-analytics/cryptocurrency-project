@@ -64,14 +64,20 @@ except Exception as e:
 
 try:
     df["price_ma"] = df["current_price"].rolling(5, min_periods=1).mean()
-    fig2, ax2 = plt.subplots(figsize=(8,4))
-    ax2.plot(df["current_price"], label="Price", color="blue")
-    ax2.plot(df["price_ma"], label="5-Day MA", color="orange")
-    ax2.legend()
-    ax2.set_title("Price vs 5-Day Moving Average")
+
+    fig2, ax2 = plt.subplots(figsize=(6,3))  # smaller, neater chart
+    ax2.plot(df["current_price"], label="Price", color="steelblue", linewidth=1.2)
+    ax2.plot(df["price_ma"], label="5-Day MA", color="darkorange", linewidth=1.5, linestyle="--")
+
+    ax2.set_title("Price vs 5-Day Moving Average", fontsize=11, pad=10)
+    ax2.set_xlabel("Index", fontsize=9)
+    ax2.set_ylabel("Price (USD)", fontsize=9)
+    ax2.legend(fontsize=8)
+    ax2.grid(alpha=0.3)
+    ax2.tick_params(axis="both", labelsize=8)
+
     st.pyplot(fig2)
 except Exception as e:
     st.warning(f"Could not plot Moving Average chart: {e}")
-
 st.markdown("---")
 st.write("Data source: CoinGecko API | Visualization by Sonia Mannepuli")
