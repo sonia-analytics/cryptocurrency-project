@@ -24,4 +24,4 @@ chart = alt.Chart(filtered).mark_line(point=True).encode(
 st.altair_chart(chart, use_container_width=True)
 
 st.title("Highlight insights with visual storytelling")
-st.writw("Bitcoin and Ethereum dominate the global crypto market, contributing more than half of the total market capitalization. The 5-day moving average smooths daily volatility and reveals steady upward momentum, reflecting overall investor confidence. Meanwhile, altcoins such as Solana and XRP show sharper fluctuations, highlighting higher speculative activity and the contrasting behavior between stable large-cap assets and more volatile emerging tokens")
+st.write("Bitcoin and Ethereum dominate the global crypto market, contributing more than half of the total market capitalization. The 5-day moving average smooths daily volatility and reveals steady upward momentum, reflecting overall investor confidence. Meanwhile, altcoins such as Solana and XRP show sharper fluctuations, highlighting higher speculative activity and the contrasting behavior between stable large-cap assets and more volatile emerging tokens")
