@@ -65,9 +65,9 @@ pip install pandas requests squlite schedule logging
 - python scripts/automate_pipeline.py  # Daily scheduled run with logging
 
 ## Run dashboard locally
-- streamlit run dashboard.py
+- streamlit run app.py
 
 ## Live Demo
-[Explore the live dashboard]()
+[Explore the live dashboard](https://cryptocurrency-project-eyuyea4dziforvj2mrizkh.streamlit.app/)
     
 ## Example Visualizations
