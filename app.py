@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import os
 
 st.title("Cryptocurrency Dashboard")
-st.caption("Created by Sonia Mannepuli — Week 5 Visualization Project")
+st.caption("Author: Sonia Mannepuli — Week 5 Visualization Project")
 
 FILE = "crypto_clean.csv"
 
