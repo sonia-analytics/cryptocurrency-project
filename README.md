@@ -69,5 +69,3 @@ pip install pandas requests squlite schedule logging
 
 ## Live Demo
 [Explore the live dashboard](https://cryptocurrency-project-eyuyea4dziforvj2mrizkh.streamlit.app/)
-    
-## Example Visualizations
