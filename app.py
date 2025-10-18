@@ -61,22 +61,18 @@ try:
 except Exception as e:
     st.warning(f"Could not plot Top 5 chart: {e}")
 
-try:
-    df["price_ma"] = df["current_price"].rolling(5, min_periods=1).mean()
+fig2, ax2 = plt.subplots(figsize=(6,3))  # compact and clean
+ax2.plot(df["current_price"], label="Price", color="steelblue", linewidth=1.3)
+ax2.plot(df["price_ma"], label="5-Day MA", color="darkorange", linewidth=1.6, linestyle="--")
 
-    fig2, ax2 = plt.subplots(figsize=(6,3))  # compact and clean
-    ax2.plot(df["current_price"], label="Price", color="steelblue", linewidth=1.3)
-    ax2.plot(df["price_ma"], label="5-Day MA", color="darkorange", linewidth=1.6, linestyle="--")
-    ax2.set_title("Price vs 5-Day Moving Average", fontsize=11, pad=10)
-    ax2.set_xlabel("Index", fontsize=9)
-    ax2.set_ylabel("Price (USD)", fontsize=9)
-    ax2.legend(fontsize=8, frameon=False, loc="upper left")  # 🔹 Removes dark box
-    ax2.grid(alpha=0.3)
-    ax2.tick_params(axis="both", labelsize=8)
+ax2.set_title("Price vs 5-Day Moving Average", fontsize=11, pad=10)
+ax2.set_xlabel("Index", fontsize=9)
+ax2.set_ylabel("Price (USD)", fontsize=9)
+ax2.legend(fontsize=8, frameon=False, loc="upper left")  # 🔹 Removes dark box
+ax2.grid(alpha=0.3)
+ax2.tick_params(axis="both", labelsize=8)
 
-    st.pyplot(fig2)
-except Exception as e:
-    st.warning(f"Could not plot Moving Average chart: {e}")
+st.pyplot(fig2)
 
 st.markdown("---")
 st.write("Data source: CoinGecko API | Visualization by Sonia Mannepuli")
