@@ -5,6 +5,7 @@ import os
 RAW_DIR, CLEAN_DIR = "data/raw","data/clean"
 ts = "20250914T020336Z" 
 raw_file = f"{RAW_DIR}/crypto_raw_{ts}.csv"
+os.makedirs(CLEAN_DIR, exist_ok=True)
 
 df = pd.read_csv("data/raw/crypto_raw.csv")
 
