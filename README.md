@@ -83,4 +83,4 @@ pip install pandas requests sqlite schedule logging streamlit
 
 ## Pipeline Architecture Diagram
 This diagram illustrates the full end-to-end flow of the cryptocurrency ETL pipeline, from data extraction to deployment.
-![Pipeline Architecture Diagram](pipeline_architecture.png)
+![Pipeline Architecture Diagram](architecture_diagram_pipeline_flow.png)
