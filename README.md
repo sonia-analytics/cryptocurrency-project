@@ -52,12 +52,12 @@ SQLite (`sqlite3`) was used successfully:
 - Daily CSV and Markdown reports are generated automatically to ensure data accuracy and consistency.
 
 ## Week 5 - Analysis & Visualization
-- Performed EDA in Jupyter Notebbok
-- Add time-series visualizialtion (trends line, moving average)
-- Highlighted insights with visual storytelling through cahrts and summary statistics
-- Bulit a Streamlit dashboard with interactive charts, filters, and summary stats
+- Performed EDA in Jupyter notebook
+- Add time-series visualization  (trends line, moving average)
+- Highlighted insights with visual storytelling through charts and summary statistics
+- Built a Streamlit dashboard with interactive charts, filters, and summary stats
 
-## Week 6 - Documenattion and Deploymenmt
+## Week 6 - Documentation and Deployment
 Polished README with setup, usage instructions, and screenshots
 Deployed the Streamlit dashboard to Streamlit Cloud
 Verified live link: Explore the live dashboard
@@ -68,7 +68,7 @@ Verified live link: Explore the live dashboard
 - `scripts/` → Python scripts (`fetch_crypto.py`, `clean_crypto.py`, `automate_pipeline', 'data_quality_scripts')
 
 ## Packages Installed
-pip install pandas requests squlite schedule logging streamlit
+pip install pandas requests sqlite schedule logging streamlit
 
 ## Running the Pipeline
 - python scripts/fetch_crypto.py   # Fetch raw + clean data
@@ -80,3 +80,7 @@ pip install pandas requests squlite schedule logging streamlit
 
 ## Live Demo
 [Explore the live dashboard](https://cryptocurrency-project-eyuyea4dziforvj2mrizkh.streamlit.app/)
+
+## Pipeline Architecture Diagram
+This diagram illustrates the full end-to-end flow of the cryptocurrency ETL pipeline, from data extraction to deployment.
+![Pipeline Architecture Diagram](pipeline_architecture.png)
